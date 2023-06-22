@@ -10,6 +10,8 @@ These include authorisation, authentication, piibase, custom logging and custom 
 The piiBase accepts any fields marked as Pii and stores them in a separate store. 
 This allows for easier GDPR cleanup, without having to edit the eventstore.
 
+To see postgres setup, see `/src/index-psql.ts` connection strings for the stack are required.
+
 To run the stack
 ```shell
 npm i

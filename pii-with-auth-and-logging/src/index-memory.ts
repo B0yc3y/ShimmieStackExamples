@@ -1,5 +1,5 @@
-import EventBase from 'shimmiestack/eventbase-postgres'
-import ShimmieStack from 'shimmiestack'
+import EventBase from 'shimmiestack/eventbase-memory'
+import ShimmieStack, { ShimmieConfig, } from 'shimmiestack'
 import { authorizeApi, noAuthorization } from 'shimmiestack/authorizers'
 import { ExampleCommand } from "./example-command";
 import { ExampleQuery } from "./example-query";
@@ -7,26 +7,26 @@ import { ExampleStateListener } from "./example-state-listener";
 import { RecordModels, SubscribeModels } from "../models";
 import { ExampleStack } from "./types";
 import { authenticationMiddleware } from "./auth-handlers";
-import PiiBase from "shimmiestack/piibase-postgres";
+import PiiBase from "shimmiestack/piibase-memory";
 import { Logger } from "./logger";
 import { CustomErrorHandler } from "./error-handler";
-import { ExamplePostgresConfig } from "./config";
 
-if(!ExamplePostgresConfig.eventBaseConnectionString){
-    throw new Error("Unable to startup, no eventbase connection url provided in config.")
+// Create an ephemeral in memory event base
+const eventBase = EventBase()
+const piiBase = PiiBase()
+
+const config: ShimmieConfig = {
+    ServerPort: 8080,
+    CORS: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+    },
+    enforceAuthorization: true,
 }
-
-// Create a connection with a postgres db
-const eventBase = EventBase({
-    connectionString: ExamplePostgresConfig.eventBaseConnectionString
-})
-const piiBase = ExamplePostgresConfig.piiBaseConnectionString ? PiiBase({
-    connectionString: ExamplePostgresConfig.piiBaseConnectionString
-}) : undefined
 
 // define the stack
 const stack: ExampleStack = ShimmieStack<RecordModels, SubscribeModels>(
-    ExamplePostgresConfig,
+    config,
     eventBase,
     authorizeApi(noAuthorization), // Currently unused, API to be updated.
     piiBase,
