@@ -25,6 +25,6 @@
     },
     "dependencies": {
         "express": "^4.18.2",
-        "shimmiestack": "^1.5.8"
+        "shimmiestack": "^1.5.9"
     }
 }
