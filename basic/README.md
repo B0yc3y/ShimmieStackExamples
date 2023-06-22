@@ -4,6 +4,8 @@ This is a bare-bones example project of how the ShimmieStack works.
 
 This example is not production ready, as it provides no auth, logging, piibase etc.
 
+I strongly suggest using the stack generics as they help catch payload errors as your events flow through the project, this example does use them
+
 To run the stack
 ```shell
 npm i
