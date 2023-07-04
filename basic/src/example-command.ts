@@ -7,24 +7,25 @@ export function ExampleCommand(
 
     // when receiving a post to /example, write an event with a timestamp.
     router.post('/', async (req, res) => {
-            const dateNow = new Date()
-            const timeStamp = dateNow.toISOString()
-            console.log(`Request received at: ${timeStamp}`)
+        const dateNow = new Date()
+        const timeStamp = dateNow.toISOString()
+        console.log(`Request received at: ${timeStamp}`)
 
-            await stack.recordEvent(
-                'exampleStreamId',
-                'EXAMPLE_EVENT',
-                {
-                    timeStamp
-                },
-                {
-                    userAgent: 'exampleAgent',
-                    user: 'exampleUser',
-                    date: dateNow.getDate()
-                }
-            )
+        await stack.recordUnversionedEvent({
+            streamId: 'exampleStreamId',
+            eventName: 'EXAMPLE_EVENT',
+            eventData: {
+                timeStamp,
+                callerName: 'tommy'
+            },
+            meta: {
+                userAgent: 'exampleAgent',
+                user: 'exampleUser',
+                date: dateNow.getDate()
+            }
+        })
 
-            res.sendStatus(204)
+        res.sendStatus(204)
         }
     )
 

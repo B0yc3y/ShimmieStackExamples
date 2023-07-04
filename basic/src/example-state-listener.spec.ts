@@ -11,18 +11,18 @@ describe("ExampleStateListener", () => {
         const dateNow = new Date()
         const timeStamp = dateNow.toISOString()
 
-        await testStack.recordEvent(
-            'exampleStreamId',
-            'EXAMPLE_EVENT',
-            {
+        await testStack.recordUnversionedEvent({
+            streamId: 'exampleStreamId',
+            eventName: 'EXAMPLE_EVENT',
+            eventData: {
                 timeStamp
             },
-            {
+            meta: {
                 userAgent: 'exampleAgent',
                 user: 'exampleUser',
                 date: dateNow.getDate()
             }
-        )
+        })
 
         expect(stateListener.getTimeStamps()[0]).toBeDefined()
         expect(stateListener.getTimeStamps()[0]).toEqual({
