@@ -16,17 +16,20 @@ describe("ExampleStateListener", () => {
             timeStamp,
             callerName: 'bobby'
         }
-        await testStack.recordEvent(
-            'exampleStreamId',
-            'EXAMPLE_EVENT',
-            payload,
+        await testStack.recordUnversionedEvent(
             {
-                userAgent: 'exampleAgent',
-                user: 'exampleUser',
-                date: dateNow.getDate()
-            },
-            ['callerName']
+                streamId: 'exampleStreamId',
+                eventName: 'EXAMPLE_EVENT',
+                eventData: payload,
+                meta: {
+                    userAgent: 'exampleAgent',
+                    user: 'exampleUser',
+                    date: dateNow.getDate()
+                },
+                piiFields: ['callerName']
+            }
         )
+
 
         expect(stateListener.getTimeStamps()[0]).toBeDefined()
         expect(stateListener.getTimeStamps()[0]).toEqual(payload)

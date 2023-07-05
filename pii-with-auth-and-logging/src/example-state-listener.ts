@@ -3,12 +3,10 @@ import { SubscribeModels } from "../models";
 import { ExampleStack } from "./types";
 
 export type ExampleState = {
-    timeStamps: {
-        timeStamp: string
-    }[]
+    timeStamps: ExampleTimestamp[]
 }
 
-export type ExampleTimestamp = { timeStamp: string }
+export type ExampleTimestamp = { timeStamp: string, callerName: string }
 
 export type ExampleStateListenerType = {
     getTimeStamps: () => ExampleTimestamp[]

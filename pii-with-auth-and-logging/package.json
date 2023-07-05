@@ -2,7 +2,7 @@
     "name": "shimmiestack-pii-example",
     "version": "1.0.0",
     "description": "A shimmiestack example project demonstrating auth, piibase, custom logging and custom error handling",
-    "main": "src/index-psql.js",
+    "main": "src/index.js",
     "scripts": {
         "test": "NODE_OPTIONS='--experimental-vm-modules' npx jest",
         "dev": "NODE_ENV=development tsc-watch --onSuccess \"node --experimental-specifier-resolution=node ./dist/src/index-memory.js\"",
@@ -26,7 +26,7 @@
     },
     "dependencies": {
         "express": "^4.18.2",
-        "shimmiestack": "^1.5.9",
+        "shimmiestack": "^1.6.0-beta2",
         "winston": "^3.9.0"
     }
 }

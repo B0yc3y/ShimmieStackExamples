@@ -42,15 +42,17 @@ describe("ExampleCommand", () => {
                 expectedResponseCode: 204,
             })
 
-            expect(testStack.recordEvent).toHaveBeenCalledWith(
-                'exampleStreamId',
-                'EXAMPLE_EVENT',
-                expect.anything(),
-                expect.anything(),
-                ["callerName"]
+            expect(testStack.recordUnversionedEvent).toHaveBeenCalledWith(
+                {
+                    streamId: 'exampleStreamId',
+                    eventName: 'EXAMPLE_EVENT',
+                    eventData: expect.anything(),
+                    meta: expect.anything(),
+                    piiFields: ["callerName"]
+                }
             )
 
-            expect(testStack.recordEvent).toHaveBeenCalledTimes(3)
+            expect(testStack.recordUnversionedEvent).toHaveBeenCalledTimes(3)
 
         })
     })
@@ -62,7 +64,7 @@ describe("ExampleCommand", () => {
                 expectedResponseCode: 401,
             })
 
-            expect(testStack.recordEvent).not.toHaveBeenCalled()
+            expect(testStack.recordUnversionedEvent).not.toHaveBeenCalled()
         })
 
         it('Should reject a request when incorrect auth header provided', async () => {
@@ -74,7 +76,7 @@ describe("ExampleCommand", () => {
                 expectedResponseCode: 401,
             })
 
-            expect(testStack.recordEvent).not.toHaveBeenCalled()
+            expect(testStack.recordUnversionedEvent).not.toHaveBeenCalled()
         })
 
         it('Should reject a request when an unauthorised user tries to call', async () => {
@@ -84,7 +86,7 @@ describe("ExampleCommand", () => {
                 expectedResponseCode: 403,
             })
 
-            expect(testStack.recordEvent).not.toHaveBeenCalled()
+            expect(testStack.recordUnversionedEvent).not.toHaveBeenCalled()
         })
     })
 })

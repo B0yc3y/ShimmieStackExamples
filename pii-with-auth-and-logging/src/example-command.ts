@@ -1,4 +1,4 @@
-import { Router, StackType } from "shimmiestack";
+import { Router } from "shimmiestack";
 import { ExampleStack } from "./types";
 import { authorizeExampleAccessRequest } from "./auth-handlers";
 
@@ -18,22 +18,17 @@ export function ExampleCommand(
             const timeStamp = dateNow.toISOString()
             console.log(`Request received at: ${timeStamp}`)
 
-            await stack.recordEvent(
-                'exampleStreamId',
-                'EXAMPLE_EVENT',
-                {
+            await stack.recordUnversionedEvent({
+                streamId: 'exampleStreamId',
+                eventName: 'EXAMPLE_EVENT',
+                eventData: {
                     timeStamp,
                     callerName: res.locals.user.name
                 },
-                {
-                    userAgent: 'exampleAgent',
-                    user: 'exampleUser',
-                    date: dateNow.getDate()
-                },
-                ['callerName'] // this tells the stack to store the callerName in the piiBase instead of the event base.
-            )
-
-            res.sendStatus(204)
+                meta: {userAgent: 'exampleAgent', user: 'exampleUser', date: dateNow.getDate()},
+                piiFields: ['callerName'] // this tells the stack to store the callerName in the piiBase instead of the event base.
+            })
+            return res.sendStatus(204)
         }
     )
 

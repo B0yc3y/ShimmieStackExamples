@@ -9,7 +9,8 @@ const stateListener: ExampleStateListenerType = ExampleStateListener(testStack)
 const exampleQuery = ExampleQuery(stateListener)
 
 const mockTimestampObject = [{
-    timeStamp: new Date().toISOString()
+    timeStamp: new Date().toISOString(),
+    callerName: 'Tommy'
 }]
 stateListener.getTimeStamps = jest.fn()
 
