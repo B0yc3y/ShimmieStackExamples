@@ -4,7 +4,8 @@
     "description": "A shimmiestack example project demonstrating auth, piibase, custom logging and custom error handling",
     "main": "src/index.js",
     "scripts": {
-        "test": "NODE_OPTIONS='--experimental-vm-modules' npx jest",
+        "test": "NODE_OPTIONS='--experimental-vm-modules' npx jest -c jest.config.js",
+        "test-int": "NODE_OPTIONS='--experimental-vm-modules' npx jest -c jest-integration.config.js",
         "dev": "NODE_ENV=development tsc-watch --onSuccess \"node --experimental-specifier-resolution=node ./dist/src/index.js\"",
         "build": "tsc",
         "start": "node --experimental-specifier-resolution=node ./dist/src/index.js"

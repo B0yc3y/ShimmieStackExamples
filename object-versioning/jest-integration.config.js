@@ -1,6 +1,6 @@
 
 const jestConfig = {
-    roots: ['<rootDir>/src'],
+    roots: ['<rootDir>/src/pg-tests'],
     testMatch: [
         '**/__tests__/**/*.+(ts|tsx|js)',
         '**/?(*.)+(spec|test).+(ts|tsx|js)',
@@ -13,7 +13,6 @@ const jestConfig = {
             },
         ],
     },
-    testPathIgnorePatterns:['<rootDir>/src/pg-tests'],
     extensionsToTreatAsEsm: ['.ts'],
     testTimeout: 10000,
     setupFiles: ['<rootDir>/jest.setup.ts'],

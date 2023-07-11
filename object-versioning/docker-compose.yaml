@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+    object-versioning-eventbase:
+        image: postgres:13
+        restart: always
+        ports:
+            - 5555:5432
+        environment:
+            - POSTGRES_USER=object-versioning
+            - POSTGRES_PASSWORD=object-versioning
+            - POSTGRES_DB=object-versioning
