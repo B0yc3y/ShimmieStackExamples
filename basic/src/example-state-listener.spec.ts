@@ -11,7 +11,7 @@ describe("ExampleStateListener", () => {
         const dateNow = new Date()
         const timeStamp = dateNow.toISOString()
 
-        await testStack.recordUnversionedEvent({
+        await testStack.recordUncheckedEvent({
             streamId: 'exampleStreamId',
             eventName: 'EXAMPLE_EVENT',
             eventData: {

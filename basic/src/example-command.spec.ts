@@ -24,14 +24,14 @@ describe("ExampleCommand", () => {
             expectedResponseCode: 204,
         })
 
-        expect(testStack.recordUnversionedEvent).toHaveBeenCalledWith({
+        expect(testStack.recordUncheckedEvent).toHaveBeenCalledWith({
             streamId: 'exampleStreamId',
             eventName: 'EXAMPLE_EVENT',
             eventData: expect.anything(),
             meta: expect.anything()
         })
 
-        expect(testStack.recordUnversionedEvent).toHaveBeenCalledTimes(3)
+        expect(testStack.recordUncheckedEvent).toHaveBeenCalledTimes(3)
 
     })
 })

@@ -11,7 +11,7 @@ export function ExampleCommand(
         const timeStamp = dateNow.toISOString()
         console.log(`Request received at: ${timeStamp}`)
 
-        await stack.recordUnversionedEvent({
+        await stack.recordUncheckedEvent({
             streamId: 'exampleStreamId',
             eventName: 'EXAMPLE_EVENT',
             eventData: {
