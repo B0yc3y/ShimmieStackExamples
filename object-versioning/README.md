@@ -17,4 +17,8 @@ npm run build && npm run start
 To test the stack
 ```shell
 npm t
+
+# for integration tests (against a postgres) install docker compose and run the below.
+docker compose up -d
+npm run test-int
 ```
