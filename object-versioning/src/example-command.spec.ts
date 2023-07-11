@@ -44,7 +44,7 @@ describe("ExampleCommand", () => {
             expectedResponseCode: 204,
         })
 
-        expect(testStack.recordUnversionedEvent).toHaveBeenCalledWith(
+        expect(testStack.recordUncheckedEvent).toHaveBeenCalledWith(
             {
                 streamId: 'exampleStreamId',
                 eventName: 'EXAMPLE_EVENT',
@@ -53,7 +53,7 @@ describe("ExampleCommand", () => {
             }
         )
 
-        expect(testStack.recordUnversionedEvent).toHaveBeenCalledTimes(3)
+        expect(testStack.recordUncheckedEvent).toHaveBeenCalledTimes(3)
 
     })
 
@@ -61,17 +61,17 @@ describe("ExampleCommand", () => {
 
         it('Should add an event each time it is called', async () => {
             await testStack.testPost({
-                path: '/version-checked',
+                path: '/checked',
                 expectedResponseCode: 204,
             })
 
             await testStack.testPost({
-                path: '/version-checked',
+                path: '/checked',
                 expectedResponseCode: 204,
             })
 
             await testStack.testPost({
-                path: '/version-checked',
+                path: '/checked',
                 expectedResponseCode: 204,
             })
 
@@ -93,7 +93,7 @@ describe("ExampleCommand", () => {
         it('Should fail when the version changes since you fetched data from the stateListener', async () => {
             // put 1 event in the db
             await testStack.testPost({
-                path: '/version-checked',
+                path: '/checked',
                 expectedResponseCode: 204,
             })
 
@@ -120,7 +120,7 @@ describe("ExampleCommand", () => {
 
             // try add a second. this should fail as we are acting on outdated info.
             const resp = await testStack.testPost({
-                path: '/version-checked',
+                path: '/checked',
                 expectedResponseCode: 409,
             })
 

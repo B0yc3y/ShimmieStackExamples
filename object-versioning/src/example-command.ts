@@ -17,7 +17,7 @@ export function ExampleCommand(
             const timeStamp = dateNow.toISOString()
             console.log(`Request received at: ${timeStamp}`)
 
-            await stack.recordUnversionedEvent({
+            await stack.recordUncheckedEvent({
                 streamId: 'exampleStreamId',
                 eventName: 'EXAMPLE_EVENT',
                 eventData: {
@@ -31,7 +31,7 @@ export function ExampleCommand(
 
     // when receiving a post to /example, write an event with a timestamp.
     router.post(
-        '/version-checked',
+        '/checked',
         // this function is used to authorize this request before the handler code below is called.
         async (req, res) => {
 

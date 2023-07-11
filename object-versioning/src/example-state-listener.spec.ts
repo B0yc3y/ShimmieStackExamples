@@ -17,7 +17,7 @@ describe("ExampleStateListener", () => {
             timeStamp,
             callerName: 'bobby'
         }
-        await testStack.recordUnversionedEvent(
+        await testStack.recordUncheckedEvent(
             {
                 streamId: 'exampleStreamId',
                 eventName: 'EXAMPLE_EVENT',
