@@ -10,10 +10,6 @@ import EventBase from "shimmiestack/eventbase-postgres";
 const pgEventBase = EventBase({
     connectionString: 'postgres://object-versioning:object-versioning@127.0.0.1:5555/object-versioning'
 })
-
-beforeAll(async () => {
-    await pgEventBase.init()
-})
 /** Create an event base using a local postgres */
 let testStack: ExampleTestStack = ShimmieTestStack<RecordModels, SubscribeModels>(
     undefined,
@@ -39,6 +35,7 @@ testStack.use((err:any,req:any,res:any,next:any) => {
 describe("ExampleCommand", () => {
     beforeEach(async () => {
         jest.clearAllMocks()
+        await pgEventBase.reset()
         stateListener.reset()
         await testStack.restart()
     })
@@ -112,14 +109,10 @@ describe("ExampleCommand", () => {
             })
 
             expect(stateListener.getTimeStamps()).toHaveLength(1)
-
-            //mock the stateListener lookup so it mimics the state changing in another process/thread/deployment
-            const originalFunc = stateListener.getTimeStamps
+            const originalDef = stateListener.getTimeStamps
+            //mock the stateListener lookup so it behaves like the state has changed in another process/thread/deployment
             stateListener.getTimeStamps = jest.fn(() => {
-                // get the state
-                const currentState = originalFunc()
-
-                // mutate state, so subsequent calls to getTimestamp get different values for max version
+                // change the state that we are getting from memory, so it causes a mismatch with the DB.
                 stateListener.addTimestamp(
                     {
                         data: {
@@ -129,7 +122,7 @@ describe("ExampleCommand", () => {
                     }
                 )
 
-                return currentState
+                return originalDef()
             })
 
             // try add a second. this should fail as we are acting on outdated info.

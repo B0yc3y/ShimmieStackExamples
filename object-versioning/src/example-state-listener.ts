@@ -7,9 +7,13 @@ export type ExampleState = {
 }
 
 export type ExampleTimestamp = { timeStamp: string }
-export type VersionedExampleTimestamp = {
-    data: ExampleTimestamp
+
+export type VersionedObject = {
     streamVersionId: string
+}
+
+export type VersionedExampleTimestamp = VersionedObject & {
+    data: ExampleTimestamp
 }
 
 export type ExampleStateListenerType = {
