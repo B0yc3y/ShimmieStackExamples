@@ -1,9 +1,9 @@
 import EventBase from 'shimmiestack/eventbase-memory'
-import ShimmieStack, { catchAllErrorHandler, ShimmieConfig, } from 'shimmiestack'
+import ShimmieStack, { ShimmieConfig, } from 'shimmiestack'
 import { authorizeApi, noAuthorization } from 'shimmiestack/authorizers'
-import { ExampleCommand } from "./example-command";
-import { ExampleQuery } from "./example-query";
-import { ExampleStateListener } from "./example-state-listener";
+import { SongCommand } from "./song-command";
+import { SongQuery } from "./song-query";
+import { SongStateListener } from "./song-state-listener";
 
 // Create an ephemeral in memory event base
 const eventBase = EventBase()
@@ -18,27 +18,27 @@ const config: ShimmieConfig = {
 }
 
 // define the stack
-const stack = ShimmieStack(
+const songStack = ShimmieStack(
     config,
     eventBase,
     authorizeApi(noAuthorization), // Currently unused, API to be updated.
 )
 
 // prepare your stateful listeners
-const exampleStateListener = ExampleStateListener(stack)
+const songStateListener = SongStateListener(songStack)
 
 // prepare the stack
-stack
+songStack
     .setApiVersion('/v1')
     .mountProcessor(
-        'Example Command',
-        '/example',
-        ExampleCommand(stack)
+        'Song Command',
+        '/songs',
+        SongCommand(songStack)
     )
     .mountProcessor(
-        'Example Query',
-        '/example',
-        ExampleQuery(exampleStateListener)
+        'Song Query',
+        '/songs',
+        SongQuery(songStateListener)
     )
     .registerPreInitFn(() => {
         console.log("An anonymous function that runs before events are replayed")

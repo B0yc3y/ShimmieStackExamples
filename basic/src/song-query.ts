@@ -1,8 +1,8 @@
 import { Router } from "shimmiestack";
-import { ExampleStateListenerType } from "./example-state-listener";
+import { SongStateListenerType } from "./song-state-listener";
 
-export function ExampleQuery(
-    stateListener: ExampleStateListenerType
+export function SongQuery(
+    stateListener: SongStateListenerType
 ): Router {
     const router = Router()
 
@@ -10,7 +10,7 @@ export function ExampleQuery(
     router.get(
         '/',
         async (req, res) => {
-            res.status(200).json(stateListener.getTimeStamps())
+            res.status(200).json(stateListener.getSongs())
         }
     )
 

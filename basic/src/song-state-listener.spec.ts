@@ -1,8 +1,9 @@
 import ShimmieTestStack from "shimmiestack/shimmieteststack";
-import { ExampleStateListener, ExampleStateListenerType } from "./example-state-listener";
+import { SongStateListener, SongStateListenerType } from "./song-state-listener";
+import { Song } from "./types";
 
 const testStack = ShimmieTestStack()
-const stateListener: ExampleStateListenerType = ExampleStateListener(testStack)
+const stateListener: SongStateListenerType = SongStateListener(testStack)
 
 describe("ExampleStateListener", () => {
     beforeEach(() => stateListener.reset())
@@ -11,12 +12,16 @@ describe("ExampleStateListener", () => {
         const dateNow = new Date()
         const timeStamp = dateNow.toISOString()
 
+        const song: Song = {
+            artist: 'Elvis',
+            year: '1952',
+            title: 'Hound Dog'
+        }
+
         await testStack.recordUncheckedEvent({
             streamId: 'exampleStreamId',
-            eventName: 'EXAMPLE_EVENT',
-            eventData: {
-                timeStamp
-            },
+            eventName: 'SONG_CREATED_EVENT',
+            eventData: song,
             meta: {
                 userAgent: 'exampleAgent',
                 user: 'exampleUser',
@@ -24,9 +29,7 @@ describe("ExampleStateListener", () => {
             }
         })
 
-        expect(stateListener.getTimeStamps()[0]).toBeDefined()
-        expect(stateListener.getTimeStamps()[0]).toEqual({
-            timeStamp
-        })
+        expect(stateListener.getSongs()[0]).toBeDefined()
+        expect(stateListener.getSongs()[0]).toEqual(song)
     })
 })
