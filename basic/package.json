@@ -25,6 +25,6 @@
     },
     "dependencies": {
         "express": "^4.18.2",
-        "shimmiestack": "^1.6.0-beta4"
+        "shimmiestack": "^1.6.0-beta6"
     }
 }
